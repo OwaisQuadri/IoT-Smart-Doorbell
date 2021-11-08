@@ -1,5 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+const Stack = createNativeStackNavigator();
+const welcomePress = () => console.log("Welcome Pressed");
+  var locked = true;
+  const status = [];
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var today = new Date();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const unlockPress = () => {
+    if (locked) {
+      status.push(date+"-"+time+":" + "Unlocked\n");
+      locked = false;
+    } else {
+      console.log("Locked");
+      status.push(date+"-"+time+":" + "Locked\n");
+      locked = true;
+    }
+  };
+  
+
+
 import {
   StyleSheet,
   Text,
@@ -9,20 +32,54 @@ import {
   SafeAreaView,
   Button,
 } from "react-native";
+
+
+
 export default function App() {
   //Welcome onpress
-  const welcomePress = () => console.log("Welcome Pressed");
-  var locked = true;
-  const unlockPress = () => {
-    if (locked) {
-      console.log("Unlocked");
-      locked = false;
-    } else {
-      console.log("Locked");
-      locked = true;
-    }
-  };
+  
   //View -> UIView
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        />
+    
+    <Stack.Screen name = "Admin" component={AdminScreen}/>
+    <Stack.Screen name = "Sign In" component={signIn}/>
+    <Stack.Screen name = "Sign Up" component={signUp}/>
+    <Stack.Screen name = "Manage Users" component={manageUsers}/>
+    <Stack.Screen name = "Manage Locks" component={manageLocks}/>
+    <Stack.Screen name = "Settings" component={settingsScreen}/>
+    
+    </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 3,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lockLogoAdmin: {
+    width: 500,
+    height:500,
+    bottom: 0,
+    alignItems:"center"
+  },
+  containerAdmin: {
+    flex: 1,
+    padding: 20
+  },
+
+
+});
+const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text
@@ -43,17 +100,190 @@ export default function App() {
       </TouchableOpacity>
 
       <Button title="Toggle Lock" onPress={unlockPress}></Button>
+      <Button title="Sign Up" onPress={() => navigation.navigate('Sign Up')}></Button>
+      <Button title="Sign In" onPress={() => navigation.navigate('Sign In')}></Button>
+      <Button title="Go to Admin Page" onPress={() => navigation.navigate('Admin')}/>
 
       <StatusBar style="auto" />
     </SafeAreaView>
+   
   );
-}
+};
+const AdminScreen = ({navigation,route}) => {
+  let text = status.toString()
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 3,
-    backgroundColor: "black",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Logs
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        <Text>{text}</Text>
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        <Button title="Manage Users" onPress={() => navigation.navigate('Manage Users')}></Button>
+        <Button title="Manage Locks" onPress={() => navigation.navigate('Manage Locks')}></Button>
+        <Button title="Settings" onPress={() => navigation.navigate('Settings')}></Button>
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
+const settingsScreen = ({navigation,route}) => {
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
+
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Settings
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        <Button title="Log Out" ></Button>
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        
+        
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
+const signIn = ({navigation,route}) => {
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
+
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Sign In
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        
+        
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
+
+const signUp = ({navigation,route}) => {
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
+
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Sign Up
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        
+        
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
+
+const manageUsers = ({navigation,route}) => {
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
+
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Manage Users
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        
+        
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
+const manageLocks = ({navigation,route}) => {
+  return (
+    <SafeAreaView style={[styles.containerAdmin, {
+
+      flexDirection:"column"
+      }]}>
+        
+        <SafeAreaView style={{ flex: 1, backgroundColor: "blue"}}>
+       <Text style={{color:"white", fontSize: 24, textAlign: "center",margin:20
+      }}>
+        Active Locks
+       </Text>
+       </SafeAreaView>
+        <SafeAreaView style={{ flex: 4, backgroundColor: "white"}}>
+        
+        </SafeAreaView>
+
+        <SafeAreaView style={{ flex: 2, backgroundColor: "lightblue"}}>
+        
+        
+        </SafeAreaView>
+
+
+ 
+      
+      </SafeAreaView>
+  );
+  
+};
