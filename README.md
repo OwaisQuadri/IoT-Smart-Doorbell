@@ -9,5 +9,5 @@ yarn
 expo start
 ```
 
-once running, go to <a href="http://localhost:19002/">localhost port 19002</a>
-follow steps to run on personal device or emulator.
+once running, go to <a href="http://localhost:19002/">localhost port 19002</a> 
+and follow steps to run on personal device or emulator.
